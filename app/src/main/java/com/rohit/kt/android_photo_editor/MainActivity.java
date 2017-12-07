@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,canvasActivity.class));
                 startActivity(new Intent(MainActivity.this, cameraActivity.class));
             }
         });

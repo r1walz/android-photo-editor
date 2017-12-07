@@ -17,7 +17,7 @@ import java.util.UUID;
 public class canvasActivity extends AppCompatActivity implements View.OnClickListener {
 
     //TODO: Add Variables
-    private DrawingView drawView;
+    public static DrawingView drawView;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
     private LinearLayout paintLayout;
     private ImageButton imgView;
