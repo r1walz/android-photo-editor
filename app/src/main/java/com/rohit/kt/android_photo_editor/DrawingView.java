@@ -58,8 +58,10 @@ public class DrawingView extends View {
 
         if (cameraActivity.k != 1)
             canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        else
-            canvasBitmap = Bitmap.createBitmap(cameraActivity.image,0,0, 1024,2096);
+        else {
+            cameraActivity.image = cameraActivity.image.copy(Bitmap.Config.ARGB_4444, true);
+            canvasBitmap = Bitmap.createBitmap(cameraActivity.image, 0, 0, cameraActivity.image.getWidth(), cameraActivity.image.getHeight());
+        }
 
         drawCanvas = new Canvas(canvasBitmap);
     }
@@ -130,9 +132,4 @@ public class DrawingView extends View {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
-
-    /*public void setBack(Bitmap image){
-        drawCanvas = new Canvas(image);
-        //drawCanvas.drawBitmap(image,0,0,canvasPaint);
-    }*/
 }
