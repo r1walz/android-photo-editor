@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".canvasActivity" >
 
     <LinearLayout
         android:layout_width="wrap_content"

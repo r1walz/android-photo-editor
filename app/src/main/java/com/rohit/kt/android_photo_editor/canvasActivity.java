@@ -26,7 +26,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_canvas);
 
         drawView = findViewById(R.id.drawing);
         paintLayout = findViewById(R.id.paint_colors);
