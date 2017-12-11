@@ -31,7 +31,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
 
-        timeStamp = "IMG_"+ new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        timeStamp = "IMG_"+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
         drawView = findViewById(R.id.drawing);
         paintLayout = findViewById(R.id.paint_colors);
