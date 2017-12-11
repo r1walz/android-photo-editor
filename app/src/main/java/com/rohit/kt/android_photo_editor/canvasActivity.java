@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class canvasActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,11 +24,14 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     private ImageButton imgView;
     private String color;
     private float smallBrush, mediumBrush, largeBrush;
+    private String timeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
+
+        timeStamp = "IMG_"+ new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
 
         drawView = findViewById(R.id.drawing);
         paintLayout = findViewById(R.id.paint_colors);
@@ -162,7 +166,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
                     String imgSaved = MediaStore.Images.Media.insertImage(
                             getContentResolver(), drawView.getDrawingCache(),
-                            UUID.randomUUID().toString() + ".jpg", "drawing"
+                            timeStamp + ".jpg", "drawing"
                     );
 
                     if (imgSaved != null)
