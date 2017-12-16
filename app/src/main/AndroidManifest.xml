@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".canvasActivity" />
+        <activity android:name=".canvasActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".cameraActivity" />
     </application>
 
