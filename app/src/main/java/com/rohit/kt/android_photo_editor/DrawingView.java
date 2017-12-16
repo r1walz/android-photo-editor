@@ -2,8 +2,10 @@ package com.rohit.kt.android_photo_editor;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -136,5 +138,16 @@ public class DrawingView extends View {
     public void startNew() {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
+    }
+
+    public void setRotate(float rotate) {
+        setDrawingCacheEnabled(true);
+        Bitmap b = getDrawingCache();
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotate);
+        invalidate();
+        b = Bitmap.createBitmap(b,0,0,b.getWidth(),b.getHeight(),matrix,true);
+        drawCanvas.drawBitmap(b,0,0,drawPaint);
+        setDrawingCacheEnabled(false);
     }
 }
