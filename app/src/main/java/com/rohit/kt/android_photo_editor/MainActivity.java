@@ -10,6 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    //TODO: Add variables
     private Button canvasButton;
     private Button cameraButton;
     private final int REQUEST_CODE = 0;
