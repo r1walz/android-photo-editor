@@ -139,15 +139,4 @@ public class DrawingView extends View {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
-
-    public void setRotate(float rotate) {
-        setDrawingCacheEnabled(true);
-        Bitmap b = getDrawingCache();
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotate);
-        invalidate();
-        b = Bitmap.createBitmap(b,0,0,b.getWidth(),b.getHeight(),matrix,true);
-        drawCanvas.drawBitmap(b,0,0,drawPaint);
-        setDrawingCacheEnabled(false);
-    }
 }

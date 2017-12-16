@@ -221,7 +221,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    drawView.setRotate(mSeekBar.getProgress());
+                    drawView.setRotation(mSeekBar.getProgress());
                     mSeekBar.setMax(45);
                     brushDialog.dismiss();
                 }
