@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="275sp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -8,30 +8,29 @@
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="24sp"
         android:layout_gravity="start"
         android:layout_marginLeft="20sp"
         android:layout_marginRight="20sp"
-        android:layout_marginTop="20sp"/>
+        android:layout_marginTop="20sp"
+        android:text="TextView"
+        android:textSize="24sp" />
 
     <SeekBar
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="45"
         android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"/>
+        android:layout_marginRight="20sp"
+        android:max="45" />
 
     <Button
         android:id="@+id/setTextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="SET"
+        android:layout_marginBottom="10sp"
         android:layout_marginLeft="20sp"
         android:layout_marginRight="20sp"
-        android:layout_marginBottom="20sp"/>
-
+        android:text="SET" />
 
 </LinearLayout>

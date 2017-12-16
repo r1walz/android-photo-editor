@@ -23,7 +23,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
     //TODO: Add Variables
     public static DrawingView drawView;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn;
     private LinearLayout paintLayout;
     private ImageButton imgView;
     private String color;
@@ -41,6 +41,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         eraseBtn = findViewById(R.id.erase_btn);
         newBtn = findViewById(R.id.new_btn);
         saveBtn = findViewById(R.id.save_btn);
+        cropBtn = findViewById(R.id.crop_btn);
+        rotateBtn = findViewById(R.id.rotate_btn);
 
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
         drawView.setBrushSize(20);
@@ -48,6 +50,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         eraseBtn.setOnClickListener(this);
         newBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        cropBtn.setOnClickListener(this);
+        rotateBtn.setOnClickListener(this);
     }
 
     //TODO: if paint is clicked
@@ -74,10 +78,28 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
 
-            TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final TextView titleView = brushDialog.findViewById(R.id.titleView);
             final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
             Button okButton = brushDialog.findViewById(R.id.setTextBtn);
-            titleView.setText("Select Brush Size:");
+            titleView.setText(R.string.select_brush);
+
+            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    titleView.setText(String.valueOf(5+progress+"px"));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(String.valueOf(5+seekBar.getProgress()+"px"));
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(R.string.select_brush);
+                }
+            });
 
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,10 +115,28 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
 
-            TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final TextView titleView = brushDialog.findViewById(R.id.titleView);
             final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
             Button okButton = brushDialog.findViewById(R.id.setTextBtn);
-            titleView.setText("Select Eraser Size:");
+            titleView.setText(R.string.select_eraser);
+
+            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    titleView.setText(String.valueOf(5+progress+"px"));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(String.valueOf(5+seekBar.getProgress()+"px"));
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(R.string.select_eraser);
+                }
+            });
 
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +164,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             newDialog.show();
         } else if (view.getId() == R.id.save_btn) {
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-            Log.d("TIMESTAMP",timeStamp);
+            Log.d("TIMESTAMP", timeStamp);
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
             saveDialog.setMessage("Save drawing to device Gallery?");
@@ -147,6 +187,45 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
             saveDialog.show();
+        } else if (view.getId() == R.id.crop_btn) {
+            //TODO: Add crop body
+        } else if (view.getId() == R.id.rotate_btn) {
+            final Dialog brushDialog = new Dialog(this);
+            brushDialog.setContentView(R.layout.slider);
+            brushDialog.show();
+
+            final TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
+            Button okButton = brushDialog.findViewById(R.id.setTextBtn);
+            titleView.setText(R.string.rotate);
+            mSeekBar.setMax(360);
+
+            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    titleView.setText(String.valueOf(progress+"\u00B0"));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(String.valueOf(seekBar.getProgress()+"\u00B0"));
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    titleView.setText(R.string.rotate);
+                }
+            });
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawView.setRotation(mSeekBar.getProgress());
+                    mSeekBar.setMax(45);
+                    brushDialog.dismiss();
+                }
+            });
         }
     }
 }
