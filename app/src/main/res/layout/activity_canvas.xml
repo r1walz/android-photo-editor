@@ -60,8 +60,10 @@
     <com.rohit.kt.android_photo_editor.DrawingView
         android:id="@+id/drawing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFFFF" />
+        android:layout_height="0dp"
+        android:background="#FFFFFFFF"
+        android:layout_margin="10dp"
+        android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
