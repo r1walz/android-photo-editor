@@ -7,8 +7,11 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +34,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
 
-        timeStamp = "IMG_"+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        timeStamp = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
         drawView = findViewById(R.id.drawing);
         paintLayout = findViewById(R.id.paint_colors);
@@ -73,73 +76,41 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         if (view.getId() == R.id.draw_btn) {
             final Dialog brushDialog = new Dialog(canvasActivity.this);
-            brushDialog.setTitle("Brush size:");
-            brushDialog.setContentView(R.layout.brush_chooser);
-
-            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
-            smallBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(smallBrush);
-                    drawView.setLastBrushSize(smallBrush);
-                    drawView.setErase(false);
-                    brushDialog.dismiss();
-                }
-            });
-            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
-            mediumBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(mediumBrush);
-                    drawView.setLastBrushSize(mediumBrush);
-                    drawView.setErase(false);
-                    brushDialog.dismiss();
-                }
-            });
-            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
-            largeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(largeBrush);
-                    drawView.setLastBrushSize(largeBrush);
-                    drawView.setErase(false);
-                    brushDialog.dismiss();
-                }
-            });
+            brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
+
+            TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
+            Button okButton = brushDialog.findViewById(R.id.setTextBtn);
+            titleView.setText("Select Brush Size:");
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawView.setBrushSize(5 + mSeekBar.getProgress());
+                    drawView.setLastBrushSize(5 + mSeekBar.getProgress());
+                    drawView.setErase(false);
+                    brushDialog.dismiss();
+                }
+            });
         } else if (view.getId() == R.id.erase_btn) {
             final Dialog brushDialog = new Dialog(this);
-            brushDialog.setTitle("Eraser size:");
-            brushDialog.setContentView(R.layout.brush_chooser);
-
-            ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
-            smallBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(smallBrush);
-                    brushDialog.dismiss();
-                }
-            });
-            ImageButton mediumBtn = brushDialog.findViewById(R.id.medium_brush);
-            mediumBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(mediumBrush);
-                    brushDialog.dismiss();
-                }
-            });
-            ImageButton largeBtn = brushDialog.findViewById(R.id.large_brush);
-            largeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(largeBrush);
-                    brushDialog.dismiss();
-                }
-            });
+            brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
+
+            TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
+            Button okButton = brushDialog.findViewById(R.id.setTextBtn);
+            titleView.setText("Select Eraser Size:");
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawView.setErase(true);
+                    drawView.setBrushSize(5 + mSeekBar.getProgress());
+                    brushDialog.dismiss();
+                }
+            });
         } else if (view.getId() == R.id.new_btn) {
             AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
             newDialog.setTitle("New drawing");
