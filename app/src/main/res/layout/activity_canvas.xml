@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC"
     android:orientation="vertical"
-    tools:context=".canvasActivity" >
+    tools:context=".canvasActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/new_btn"
@@ -19,18 +19,35 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/start_new"
             android:src="@drawable/new_pic" />
+
         <ImageButton
             android:id="@+id/draw_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/brush"
             android:src="@drawable/brush" />
+
         <ImageButton
             android:id="@+id/erase_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/erase"
             android:src="@drawable/eraser" />
+
+        <ImageButton
+            android:id="@+id/crop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/crop"
+            android:src="@drawable/crop" />
+
+        <ImageButton
+            android:id="@+id/rotate_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:contentDescription="@string/rotate"
+            android:src="@drawable/rotate" />
+
         <ImageButton
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
@@ -55,14 +72,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <!-- Top Row -->
         <LinearLayout
             android:id="@+id/paint_colors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="@dimen/large_brush"
@@ -129,7 +146,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="@dimen/large_brush"
