@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".canvasActivity" />
-        <activity android:name=".cameraActivity"></activity>
+        <activity android:name=".cameraActivity" />
     </application>
 
 </manifest>
