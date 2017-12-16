@@ -132,7 +132,6 @@ public class DrawingView extends View {
 
         if (erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         else drawPaint.setXfermode(null);
-
     }
 
     public void startNew() {

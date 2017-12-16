@@ -3,6 +3,8 @@ package com.rohit.kt.android_photo_editor;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     private ImageButton imgView;
     private String color;
     private String timeStamp;
+    private float Rotation = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +89,13 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(5+progress+"px"));
+                    titleView.setText(String.valueOf(5 + progress + "px"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(5+seekBar.getProgress()+"px"));
+                    titleView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
 
                 @Override
@@ -123,13 +126,13 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(5+progress+"px"));
+                    titleView.setText(String.valueOf(5 + progress + "px"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(5+seekBar.getProgress()+"px"));
+                    titleView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
 
                 @Override
@@ -164,15 +167,18 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             newDialog.show();
         } else if (view.getId() == R.id.save_btn) {
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-            Log.d("TIMESTAMP", timeStamp);
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
             saveDialog.setMessage("Save drawing to device Gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     drawView.setDrawingCacheEnabled(true);
+                    Matrix matrix = new Matrix();
+                    matrix.setRotate(Rotation);
+                    Bitmap b = drawView.getDrawingCache();
+                    b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 
-                    String imgSaved = MediaStore.Images.Media.insertImage(getContentResolver(), drawView.getDrawingCache(), timeStamp, "drawing");
+                    String imgSaved = MediaStore.Images.Media.insertImage(getContentResolver(), b, timeStamp, "drawing");
 
                     if (imgSaved != null)
                         Toast.makeText(getApplicationContext(), "Drawing saved to gallery!", Toast.LENGTH_SHORT).show();
@@ -203,18 +209,19 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(progress+"\u00B0"));
+                    titleView.setText(String.valueOf(progress + "\u00B0"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(seekBar.getProgress()+"\u00B0"));
+                    titleView.setText(String.valueOf(seekBar.getProgress() + "\u00B0"));
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     titleView.setText(R.string.rotate);
+                    Rotation = seekBar.getProgress();
                 }
             });
 
