@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -71,6 +72,10 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             final Dialog brushDialog = new Dialog(canvasActivity.this);
             brushDialog.setTitle("Brush size:");
             brushDialog.setContentView(R.layout.brush_chooser);
+            brushDialog.show();
+
+            SeekBar seekBar = brushDialog.findViewById(R.id.brushSlider);
+
 
             ImageButton smallBtn = brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +140,6 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                     brushDialog.dismiss();
                 }
             });
-            brushDialog.show();
         } else if (view.getId() == R.id.new_btn) {
             AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
             newDialog.setTitle("New drawing");
