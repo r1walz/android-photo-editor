@@ -8,10 +8,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import static com.rohit.kt.android_photo_editor.canvasActivity.drawView;
 
 /**
  * Created by s4mr4t on 7/12/17.
@@ -57,6 +61,13 @@ public class DrawingView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Drawable D = drawView.getBackground();
+
+        if (cameraActivity.k == 1)
+            drawView.setBackground(new BitmapDrawable(cameraActivity.image));
+        else
+            drawView.setBackground(D);
+
         drawCanvas = new Canvas(canvasBitmap);
     }
 

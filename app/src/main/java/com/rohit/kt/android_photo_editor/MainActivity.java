@@ -22,13 +22,15 @@ public class MainActivity extends AppCompatActivity {
         canvasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,canvasActivity.class));
+                cameraActivity.k = 0;
+                startActivity(new Intent(MainActivity.this, canvasActivity.class));
             }
         });
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, canvasActivity.class));
                 startActivity(new Intent(MainActivity.this, cameraActivity.class));
             }
         });
