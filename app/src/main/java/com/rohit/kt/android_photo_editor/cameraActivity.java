@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ public class cameraActivity extends AppCompatActivity {
     private Intent cameraIntent;
     public static Bitmap image;
     private final int CAMERA_REQUEST_CODE = 1024;
-    private File imageFile;
+    private File tempFile;
     private Uri imageUri;
 
     @Override
@@ -29,8 +30,8 @@ public class cameraActivity extends AppCompatActivity {
 
         canvasActivity.drawView = findViewById(R.id.drawing);
 
-        imageFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-        imageUri = Uri.fromFile(imageFile);
+        tempFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        imageUri = FileProvider.getUriForFile(cameraActivity.this, BuildConfig.APPLICATION_ID + ".provider", tempFile);
 
         cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
