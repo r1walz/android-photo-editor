@@ -49,7 +49,7 @@ public class cameraActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             k = 1;
-            //tempFile.delete();
+            tempFile.delete();
             finish();
         } else {
             k = 9;
