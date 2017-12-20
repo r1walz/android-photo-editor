@@ -37,6 +37,11 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
 
+        if (cameraActivity.k == 9) {
+            cameraActivity.k = 0;
+            finish();
+        }
+
         drawView = findViewById(R.id.drawing);
         paintLayout = findViewById(R.id.paint_colors);
         currPaint = (ImageButton) paintLayout.getChildAt(0);

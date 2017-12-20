@@ -35,7 +35,7 @@ public class cameraActivity extends AppCompatActivity {
         imageUri = FileProvider.getUriForFile(cameraActivity.this, BuildConfig.APPLICATION_ID + ".provider", tempFile);
 
         cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
@@ -44,12 +44,15 @@ public class cameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             try {
-                image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             k = 1;
-            tempFile.delete();
+            //tempFile.delete();
+            finish();
+        } else {
+            k = 9;
             finish();
         }
     }

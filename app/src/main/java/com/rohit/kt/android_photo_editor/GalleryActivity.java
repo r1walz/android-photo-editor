@@ -28,7 +28,7 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GALLERY_REQ_CODE) {
+        if (requestCode == GALLERY_REQ_CODE && resultCode == RESULT_OK) {
             imageUri = data.getData();
             try {
                 cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
@@ -36,6 +36,9 @@ public class GalleryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             cameraActivity.k = 1;
+            finish();
+        } else {
+            cameraActivity.k = 9;
             finish();
         }
 
