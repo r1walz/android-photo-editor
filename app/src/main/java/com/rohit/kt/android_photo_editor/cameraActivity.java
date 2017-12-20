@@ -31,7 +31,7 @@ public class cameraActivity extends AppCompatActivity {
 
         canvasActivity.drawView = findViewById(R.id.drawing);
 
-        tempFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        tempFile = new File(Environment.getExternalStorageDirectory(), "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
         imageUri = FileProvider.getUriForFile(cameraActivity.this, BuildConfig.APPLICATION_ID + ".provider", tempFile);
 
         cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
