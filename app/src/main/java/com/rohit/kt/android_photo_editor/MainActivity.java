@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 cameraActivity.k = 0;
                 startActivity(new Intent(MainActivity.this, canvasActivity.class));
+                startActivity(new Intent(MainActivity.this, GalleryActivity.class));
             }
         });
 
