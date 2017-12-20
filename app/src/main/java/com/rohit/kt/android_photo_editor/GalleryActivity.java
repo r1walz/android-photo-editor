@@ -12,6 +12,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     private Intent galIntent;
     private Uri imageUri;
+    private final int GALLERY_REQ_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         galIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galIntent, "Select Image:"), 2);
+        startActivityForResult(Intent.createChooser(galIntent, "Select Image:"), GALLERY_REQ_CODE);
 
     }
 
@@ -27,7 +28,7 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 2) {
+        if (requestCode == GALLERY_REQ_CODE) {
             imageUri = data.getData();
             try {
                 cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
