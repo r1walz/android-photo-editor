@@ -25,7 +25,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
     //TODO: Add Variables
     public static DrawingView drawView;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn, textOpenBtn, emojiBtn;
     private LinearLayout paintLayout;
     private ImageButton imgView;
     private String color;
@@ -51,6 +51,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         saveBtn = findViewById(R.id.save_btn);
         cropBtn = findViewById(R.id.crop_btn);
         rotateBtn = findViewById(R.id.rotate_btn);
+        textOpenBtn = findViewById(R.id.txtBox);
+
 
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
         drawView.setBrushSize(20);
@@ -60,6 +62,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         saveBtn.setOnClickListener(this);
         cropBtn.setOnClickListener(this);
         rotateBtn.setOnClickListener(this);
+        textOpenBtn.setOnClickListener(this);
     }
 
     //TODO: if paint is clicked
@@ -238,6 +241,10 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                     brushDialog.dismiss();
                 }
             });
+        } else if (view.getId() == R.id.txtBox) {
+            Dialog dialog = new Dialog(canvasActivity.this);
+            dialog.setContentView(R.layout.text_box);
+            dialog.show();
         }
     }
 }

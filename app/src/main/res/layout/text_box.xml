@@ -11,7 +11,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/input_text"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/inputText"
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/txtSlider"
+        android:layout_marginBottom="10dp"
         android:text="@string/okTxt" />
 
 

@@ -22,6 +22,7 @@
         android:gravity="center">
 
         <ImageButton
+            android:id="@+id/txtBox"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:src="@drawable/text" />
@@ -171,6 +172,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/emojiBtn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:src="@drawable/emoji" />
