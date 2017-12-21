@@ -47,11 +47,17 @@ public class cameraActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             k = 1;
-            tempFile.delete();
+
             finish();
         } else {
             k = 9;
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tempFile.delete();
     }
 }
