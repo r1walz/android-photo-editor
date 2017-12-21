@@ -3,10 +3,13 @@ package com.rohit.kt.android_photo_editor;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,6 +39,10 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     private String color;
     private String timeStamp;
     private float Rotation = 0;
+
+    private Intent CropIntent;
+    private Uri imageUri;
+    private File tempFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +215,28 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             saveDialog.show();
         } else if (view.getId() == R.id.crop_btn) {
             //TODO: Add crop body
+
+            drawView.setDrawingCacheEnabled(true);
+            drawView.buildDrawingCache();
+            String url = MediaStore.Images.Media.insertImage(getContentResolver(), drawView.getDrawingCache(), "tmp_" + System.currentTimeMillis(), "Drawing");
+            imageUri = Uri.parse(url);
+
+            tempFile = new File(url);
+
+            CropIntent = new Intent("com.android.camera.action.CROP");
+
+            CropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            CropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            CropIntent.setDataAndType(imageUri, "image/*");
+
+            CropIntent.putExtra("crop", true);
+            CropIntent.putExtra("scaleUpIfNeeded", true);
+            CropIntent.putExtra("return-data", true);
+            CropIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+            startActivityForResult(CropIntent, 2);
+
         } else if (view.getId() == R.id.rotate_btn) {
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setContentView(R.layout.slider);
@@ -294,7 +325,27 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             });
 
             dialog.show();
-
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode == RESULT_OK){
+            try {
+                cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                cameraActivity.k = 1;
+                drawView.setBackground(new BitmapDrawable(cameraActivity.image));
+                tempFile.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tempFile.delete();
     }
 }
