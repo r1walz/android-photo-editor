@@ -270,7 +270,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
                     drawView.drawCanvas.drawText(gText, left, top, p);
 
-                   // drawView.invalidate();
+                    drawView.invalidate();
                     dialog.dismiss();
                 }
             });
