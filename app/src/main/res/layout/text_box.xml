@@ -29,6 +29,7 @@
         android:layout_below="@id/inputText" />
 
     <Button
+        android:id="@+id/okBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

@@ -27,10 +27,11 @@ public class DrawingView extends View {
 
     //TODO: Add Variables
     private Path drawPath;
-    private Paint drawPaint, canvasPaint;
+    public Paint drawPaint;
+    private Paint canvasPaint;
     private int paintColor = 0xff660000;
-    private Canvas drawCanvas;
-    private Bitmap canvasBitmap;
+    public Canvas drawCanvas;
+    public Bitmap canvasBitmap;
     private float brushSize, lastBrushSize;
     private boolean erase = false;
 

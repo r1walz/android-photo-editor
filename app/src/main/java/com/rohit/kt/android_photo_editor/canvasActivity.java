@@ -5,12 +5,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -242,9 +245,56 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         } else if (view.getId() == R.id.txtBox) {
-            Dialog dialog = new Dialog(canvasActivity.this);
+            final Dialog dialog = new Dialog(canvasActivity.this);
             dialog.setContentView(R.layout.text_box);
+
+            Button okBtn = dialog.findViewById(R.id.okBtn);
+            final EditText input = dialog.findViewById(R.id.inputText);
+            final SeekBar seekBar = dialog.findViewById(R.id.txtSlider);
+            seekBar.setMax(95);
+            final TextView titleTxt = dialog.findViewById(R.id.titleTxt);
+
+            okBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    p.setColor(drawView.drawPaint.getColor());
+                    p.setTextSize((float) (seekBar.getProgress() + 5) * getResources().getDisplayMetrics().density);
+
+                    String gText = input.getText().toString();
+                    Rect dstRect = new Rect();
+                    p.getTextBounds(gText, 0, gText.length(), dstRect);
+
+                    int left = (drawView.canvasBitmap.getWidth() - dstRect.width()) / 2;
+                    int top = (drawView.canvasBitmap.getHeight() + dstRect.height()) / 2;
+
+                    drawView.drawCanvas.drawText(gText, left, top, p);
+
+                   // drawView.invalidate();
+                    dialog.dismiss();
+                }
+            });
+
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    titleTxt.setText(R.string.input_text);
+                }
+            });
+
             dialog.show();
+
         }
     }
 }
