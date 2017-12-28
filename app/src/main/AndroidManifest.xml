@@ -37,7 +37,8 @@
                 android:resource="@xml/provider_path" />
         </provider>
 
-        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".GalleryActivity"/>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
     </application>
 
 </manifest>
