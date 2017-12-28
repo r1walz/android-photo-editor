@@ -23,6 +23,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -223,17 +227,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
             tempFile = new File(url);
 
-            CropIntent = new Intent("com.android.camera.action.CROP");
-
-            CropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            CropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-            CropIntent.setDataAndType(imageUri, "image/*");
-
-            CropIntent.putExtra("crop", true);
-            CropIntent.putExtra("scaleUpIfNeeded", true);
-            CropIntent.putExtra("return-data", true);
-            CropIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            CropIntent = CropImage.activity(imageUri).getIntent(canvasActivity.this);
 
             startActivityForResult(CropIntent, 2);
 
@@ -331,9 +325,10 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && resultCode == RESULT_OK){
+        if (requestCode == 2 && resultCode == RESULT_OK) {
             try {
-                cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                imageUri = CropImage.getActivityResult(data).getUri();
+                cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 cameraActivity.k = 1;
                 drawView.setBackground(new BitmapDrawable(cameraActivity.image));
                 tempFile.delete();
