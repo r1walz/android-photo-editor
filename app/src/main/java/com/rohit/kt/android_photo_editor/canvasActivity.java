@@ -197,6 +197,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     drawView.setDrawingCacheEnabled(true);
+                    drawView.buildDrawingCache();
                     Matrix matrix = new Matrix();
                     matrix.setRotate(Rotation);
                     Bitmap b = drawView.getDrawingCache();
