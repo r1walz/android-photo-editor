@@ -326,6 +326,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK) {
+            getContentResolver().delete(imageUri, null, null);
             try {
                 imageUri = CropImage.getActivityResult(data).getUri();
                 cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
@@ -335,11 +336,5 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        tempFile.delete();
     }
 }
