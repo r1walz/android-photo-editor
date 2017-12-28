@@ -17,7 +17,7 @@
         android:id="@+id/canBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To canvas"/>
+        android:text="To Gallery" />
 
     <Button
         android:id="@+id/camBtn"
