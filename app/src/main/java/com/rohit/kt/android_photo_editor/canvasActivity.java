@@ -331,7 +331,6 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 cameraActivity.k = 1;
                 drawView.setBackground(new BitmapDrawable(cameraActivity.image));
-                tempFile.delete();
             } catch (IOException e) {
                 e.printStackTrace();
             }
