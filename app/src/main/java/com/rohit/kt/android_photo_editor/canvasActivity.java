@@ -42,11 +42,11 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn, textOpenBtn, emojiBtn;
     private LinearLayout paintLayout;
     private ImageButton imgView;
-    private String color, timeStamp, eText;
+    private String color, timeStamp, eText, gText;
     private float Rotation = 0;
     private Paint p;
     private EmojiconEditText emojiText;
-    private boolean emojiOn = false;
+    private boolean textOn = false, emojiOn = false;
 
     private Intent CropIntent;
     private Uri imageUri;
@@ -283,58 +283,61 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             });
         } else if (view.getId() == R.id.txtBox) {
             emojiOn = false;
-            final Dialog dialog = new Dialog(canvasActivity.this);
-            dialog.setContentView(R.layout.text_box);
-
-            Button okBtn = dialog.findViewById(R.id.okBtn);
-            final EditText input = dialog.findViewById(R.id.inputText);
-            final SeekBar seekBar = dialog.findViewById(R.id.txtSlider);
-            seekBar.setMax(95);
-            final TextView titleTxt = dialog.findViewById(R.id.titleTxt);
-
-            okBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-                    p.setColor(drawView.drawPaint.getColor());
-                    p.setTextSize((float) (seekBar.getProgress() + 5) * getResources().getDisplayMetrics().density);
-
-                    String gText = input.getText().toString();
-                    Rect dstRect = new Rect();
-                    p.getTextBounds(gText, 0, gText.length(), dstRect);
-
-                    int left = (drawView.canvasBitmap.getWidth() - dstRect.width()) / 2;
-                    int top = (drawView.canvasBitmap.getHeight() + dstRect.height()) / 2;
-
-                    drawView.drawCanvas.drawText(gText, left, top, p);
-
-                    drawView.invalidate();
-                    dialog.dismiss();
-                }
-            });
-
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
-
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    titleTxt.setText(R.string.input_text);
-                }
-            });
-
-            dialog.show();
+            textDialogAppear();
         } else if (view.getId() == R.id.emojiBtn) {
             emojiDialogAppear();
         }
+    }
+
+    private void textDialogAppear() {
+
+        final Dialog dialog = new Dialog(canvasActivity.this);
+        dialog.setContentView(R.layout.text_box);
+
+        Button okBtn = dialog.findViewById(R.id.okBtn);
+        final EditText input = dialog.findViewById(R.id.inputText);
+        final SeekBar seekBar = dialog.findViewById(R.id.txtSlider);
+        seekBar.setMax(95);
+        final TextView titleTxt = dialog.findViewById(R.id.titleTxt);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textOn = true;
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                p.setColor(drawView.drawPaint.getColor());
+                p.setTextSize((float) (seekBar.getProgress() + 5) * getResources().getDisplayMetrics().density);
+
+                gText = input.getText().toString();
+                Rect dstRect = new Rect();
+                p.getTextBounds(gText, 0, gText.length(), dstRect);
+
+                if (!gText.equals(""))
+                    Toast.makeText(canvasActivity.this, "Touch where you want to insert text.", Toast.LENGTH_LONG).show();
+
+                dialog.dismiss();
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                titleTxt.setText(R.string.input_text);
+            }
+        });
+
+        dialog.show();
     }
 
     private void emojiDialogAppear() {
@@ -419,6 +422,9 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         if (emojiOn && !eText.equals("")) {
             if (event.getAction() == MotionEvent.ACTION_DOWN)
                 drawView.drawCanvas.drawText(eText, touchX, touchY, p);
+        } else if (textOn && !gText.equals("")) {
+            drawView.drawCanvas.drawText(gText, touchX, touchY, p);
+            textOn = false;
         } else {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
