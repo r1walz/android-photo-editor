@@ -89,6 +89,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
     //TODO: if paint is clicked
     public void paintClicked(View view) {
+        emojiOn = false;
         if (view != currPaint) {
             imgView = (ImageButton) view;
             color = view.getTag().toString();
@@ -107,6 +108,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.draw_btn) {
+            emojiOn = false;
             final Dialog brushDialog = new Dialog(canvasActivity.this);
             brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
@@ -144,6 +146,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         } else if (view.getId() == R.id.erase_btn) {
+            emojiOn = false;
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
@@ -180,6 +183,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         } else if (view.getId() == R.id.new_btn) {
+            emojiOn = false;
             AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
             newDialog.setTitle("New drawing");
             newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
@@ -196,6 +200,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             });
             newDialog.show();
         } else if (view.getId() == R.id.save_btn) {
+            emojiOn = false;
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
@@ -225,8 +230,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             });
             saveDialog.show();
         } else if (view.getId() == R.id.crop_btn) {
-            //TODO: Add crop body
-
+            emojiOn = false;
             drawView.setDrawingCacheEnabled(true);
             drawView.buildDrawingCache();
             String url = MediaStore.Images.Media.insertImage(getContentResolver(), drawView.getDrawingCache(), "tmp_" + System.currentTimeMillis(), "Drawing");
@@ -239,6 +243,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             startActivityForResult(CropIntent, 2);
 
         } else if (view.getId() == R.id.rotate_btn) {
+            emojiOn = false;
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setContentView(R.layout.slider);
             brushDialog.show();
@@ -277,6 +282,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         } else if (view.getId() == R.id.txtBox) {
+            emojiOn = false;
             final Dialog dialog = new Dialog(canvasActivity.this);
             dialog.setContentView(R.layout.text_box);
 
@@ -411,8 +417,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         float touchY = event.getY();
 
         if (emojiOn && !eText.equals("")) {
-            drawView.drawCanvas.drawText(eText, touchX, touchY, p);
-            emojiOn = false;
+            if (event.getAction() == MotionEvent.ACTION_DOWN)
+                drawView.drawCanvas.drawText(eText, touchX, touchY, p);
         } else {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
