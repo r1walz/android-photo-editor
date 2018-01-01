@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="275sp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/titleTxt"
@@ -10,7 +10,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/input_text"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp" />
 
     <EditText
@@ -18,9 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleTxt"
+        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@android:color/white" />
 
     <SeekBar
         android:id="@+id/txtSlider"
@@ -35,7 +36,10 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/txtSlider"
         android:layout_marginBottom="10dp"
-        android:text="@string/okTxt" />
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/swoosh_button"
+        android:text="@string/okTxt"
+        android:textColor="@android:color/white" />
 
 
 </RelativeLayout>

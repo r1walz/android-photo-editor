@@ -4,6 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_blue"
     android:orientation="vertical">
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:max="90" />
+        android:max="45" />
 
     <LinearLayout
         android:layout_width="match_parent"

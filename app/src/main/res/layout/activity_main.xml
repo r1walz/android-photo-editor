@@ -4,25 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_gray"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.rohit.kt.android_photo_editor.MainActivity"
-    android:gravity="center">
+    tools:context="com.rohit.kt.android_photo_editor.MainActivity">
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/pe"/>
+        android:src="@drawable/pe" />
 
     <Button
         android:id="@+id/canBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Gallery" />
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/swoosh_button"
+        android:text="To Gallery"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/camBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="to camera"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/swoosh_button"
+        android:text="to camera"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

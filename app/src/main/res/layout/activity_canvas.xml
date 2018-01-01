@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCCCCCC"
+    android:background="@drawable/gradient_blue"
     android:orientation="vertical"
     tools:context=".canvasActivity">
 
@@ -18,13 +18,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/txtBox"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:src="@drawable/text" />
 
         <LinearLayout
@@ -173,8 +174,9 @@
 
         <ImageButton
             android:id="@+id/emojiBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:src="@drawable/emoji" />
     </LinearLayout>
 
@@ -186,43 +188,49 @@
 
         <ImageButton
             android:id="@+id/new_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/start_new"
             android:src="@drawable/new_pic" />
 
         <ImageButton
             android:id="@+id/draw_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/brush"
             android:src="@drawable/brush" />
 
         <ImageButton
             android:id="@+id/erase_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/erase"
             android:src="@drawable/eraser" />
 
         <ImageButton
             android:id="@+id/crop_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/crop"
             android:src="@drawable/crop" />
 
         <ImageButton
             android:id="@+id/rotate_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/rotate"
             android:src="@drawable/rotate" />
 
         <ImageButton
             android:id="@+id/save_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
+            android:background="@drawable/swoosh_button"
             android:contentDescription="@string/save"
             android:src="@drawable/save" />
 
