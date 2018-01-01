@@ -336,6 +336,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (requestCode == 2 && resultCode == RESULT_CANCELED) {
+            getContentResolver().delete(imageUri, null, null);
         }
     }
 }
