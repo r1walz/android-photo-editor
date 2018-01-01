@@ -14,4 +14,5 @@
     <string name="select_eraser">Select Eraser Size:</string>
     <string name="input_text">Input Text and Size:</string>
     <string name="okTxt">OK</string>
+    <string name="emoji_input">Select Emojies and Size:</string>
 </resources>

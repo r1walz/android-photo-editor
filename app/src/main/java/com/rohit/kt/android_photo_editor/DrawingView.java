@@ -26,7 +26,7 @@ import static com.rohit.kt.android_photo_editor.canvasActivity.drawView;
 public class DrawingView extends View {
 
     //TODO: Add Variables
-    private Path drawPath;
+    public Path drawPath;
     public Paint drawPaint;
     private Paint canvasPaint;
     private int paintColor = 0xff660000;
@@ -81,30 +81,30 @@ public class DrawingView extends View {
         canvas.drawPath(drawPath, drawPaint);
     }
 
-    //TODO: Facilitate Drawing
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float touchX = event.getX();
-        float touchY = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                drawPath.moveTo(touchX, touchY);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                drawPath.lineTo(touchX, touchY);
-                break;
-            case MotionEvent.ACTION_UP:
-                drawCanvas.drawPath(drawPath, drawPaint);
-                drawPath.reset();
-                break;
-            default:
-                return false;
-        }
-
-        invalidate();
-        return true;
-    }
+    //TODO: Facilitate Drawing, It is implemented in canvasActivity
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        float touchX = event.getX();
+//        float touchY = event.getY();
+//
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                drawPath.moveTo(touchX, touchY);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                drawPath.lineTo(touchX, touchY);
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                drawCanvas.drawPath(drawPath, drawPaint);
+//                drawPath.reset();
+//                break;
+//            default:
+//                return false;
+//        }
+//
+//        invalidate();
+//        return true;
+//    }
 
     //TODO: simple method to change paint color
     public void setColor(String newColor) {

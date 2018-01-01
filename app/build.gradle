@@ -18,8 +18,13 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
+    compile 'com.github.hani-momanii:SuperNova-Emoji:1.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

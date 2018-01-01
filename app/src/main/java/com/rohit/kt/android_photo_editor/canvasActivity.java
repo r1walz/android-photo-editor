@@ -13,19 +13,18 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageActivity;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,16 +32,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class canvasActivity extends AppCompatActivity implements View.OnClickListener {
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
+
+public class canvasActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     //TODO: Add Variables
     public static DrawingView drawView;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn, textOpenBtn, emojiBtn;
     private LinearLayout paintLayout;
     private ImageButton imgView;
-    private String color;
-    private String timeStamp;
+    private String color, timeStamp, eText;
     private float Rotation = 0;
+    private Paint p;
+    private EmojiconEditText emojiText;
+    private boolean emojiOn = false;
 
     private Intent CropIntent;
     private Uri imageUri;
@@ -68,7 +72,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         cropBtn = findViewById(R.id.crop_btn);
         rotateBtn = findViewById(R.id.rotate_btn);
         textOpenBtn = findViewById(R.id.txtBox);
-
+        emojiBtn = findViewById(R.id.emojiBtn);
 
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
         drawView.setBrushSize(20);
@@ -79,6 +83,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         cropBtn.setOnClickListener(this);
         rotateBtn.setOnClickListener(this);
         textOpenBtn.setOnClickListener(this);
+        emojiBtn.setOnClickListener(this);
+        drawView.setOnTouchListener(this);
     }
 
     //TODO: if paint is clicked
@@ -320,7 +326,65 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             });
 
             dialog.show();
+        } else if (view.getId() == R.id.emojiBtn) {
+            emojiDialogAppear();
         }
+    }
+
+    private void emojiDialogAppear() {
+        final Dialog d = new Dialog(canvasActivity.this, android.R.style.Theme_Holo_Light_NoActionBar);
+        d.setContentView(R.layout.emoji_chooser);
+        View view = d.findViewById(R.id.root_view);
+        emojiText = d.findViewById(R.id.emojicon_edit_text);
+
+        final TextView titleText = d.findViewById(R.id.titleText);
+        final SeekBar eSeekBar = d.findViewById(R.id.emoji_seek_bar);
+
+        ImageView emojiImage = d.findViewById(R.id.emoji_btn);
+        ImageView submitBtn = d.findViewById(R.id.submit_btn);
+        EmojIconActions emojiIcons = new EmojIconActions(canvasActivity.this, view, emojiText, emojiImage);
+        emojiIcons.ShowEmojIcon();
+        emojiIcons.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float size = 5 + eSeekBar.getProgress();
+                eText = emojiText.getText().toString();
+                emojiOn = true;
+
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                p.setColor(drawView.drawPaint.getColor());
+                p.setTextSize(size * getResources().getDisplayMetrics().density);
+                Rect dstRect = new Rect();
+                p.getTextBounds(eText, 0, eText.length(), dstRect);
+
+                if (!eText.equals(""))
+                    Toast.makeText(canvasActivity.this, "Touch where you want to draw Emoji.", Toast.LENGTH_LONG).show();
+
+                d.dismiss();
+            }
+        });
+
+        eSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                titleText.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                titleText.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                titleText.setText(R.string.emoji_input);
+            }
+        });
+
+        d.show();
     }
 
     @Override
@@ -339,5 +403,34 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         } else if (requestCode == 2 && resultCode == RESULT_CANCELED) {
             getContentResolver().delete(imageUri, null, null);
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        float touchX = event.getX();
+        float touchY = event.getY();
+
+        if (emojiOn && !eText.equals("")) {
+            drawView.drawCanvas.drawText(eText, touchX, touchY, p);
+            emojiOn = false;
+        } else {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    drawView.drawPath.moveTo(touchX, touchY);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    drawView.drawPath.lineTo(touchX, touchY);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    drawView.drawCanvas.drawPath(drawView.drawPath, drawView.drawPaint);
+                    drawView.drawPath.reset();
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        drawView.invalidate();
+        return true;
     }
 }
