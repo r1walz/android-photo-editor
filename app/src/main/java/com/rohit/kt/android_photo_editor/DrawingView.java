@@ -78,7 +78,8 @@ public class DrawingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        canvas.drawPath(drawPath, drawPaint);
+        if (!erase)
+            canvas.drawPath(drawPath, drawPaint);
     }
 
     //TODO: Facilitate Drawing, It is implemented in canvasActivity

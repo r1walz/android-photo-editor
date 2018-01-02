@@ -210,7 +210,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             emojiOn = false;
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
             drawView.setDrawingCacheEnabled(true);
-            if(drawView.getDrawingCache()!=null)
+            if (drawView.getDrawingCache() != null)
                 drawView.destroyDrawingCache();
             drawView.buildDrawingCache();
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
@@ -243,7 +243,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             emojiOn = false;
             drawView.setDrawingCacheEnabled(true);
 
-            if(drawView.getDrawingCache()!=null)
+            if (drawView.getDrawingCache() != null)
                 drawView.destroyDrawingCache();
 
             drawView.buildDrawingCache();
@@ -445,6 +445,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                     break;
                 case MotionEvent.ACTION_MOVE:
                     drawView.drawPath.lineTo(touchX, touchY);
+                    drawView.drawCanvas.drawPath(drawView.drawPath, drawView.drawPaint);
                     break;
                 case MotionEvent.ACTION_UP:
                     drawView.drawCanvas.drawPath(drawView.drawPath, drawView.drawPaint);
