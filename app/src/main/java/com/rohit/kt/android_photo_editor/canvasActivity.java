@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,10 @@ import android.widget.Toast;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -208,7 +212,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             newDialog.show();
         } else if (view.getId() == R.id.save_btn) {
             emojiOn = false;
-            timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+            timeStamp = "IMG_"+new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date())+".png";
             drawView.setDrawingCacheEnabled(true);
             if (drawView.getDrawingCache() != null)
                 drawView.destroyDrawingCache();
@@ -222,14 +226,17 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                     Matrix matrix = new Matrix();
                     matrix.setRotate(Rotation);
                     Bitmap b = drawView.getDrawingCache();
+                    b.setHasAlpha(true);
                     b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 
-                    String imgSaved = MediaStore.Images.Media.insertImage(getContentResolver(), b, timeStamp, "drawing");
-
-                    if (imgSaved != null)
+                    try {
+                        OutputStream os = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+File.separator+timeStamp);
+                        b.compress(Bitmap.CompressFormat.PNG,100,os);
                         Toast.makeText(getApplicationContext(), "Drawing saved to gallery!", Toast.LENGTH_SHORT).show();
-                    else
+                    } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), "Oops! Image could not be saved.", Toast.LENGTH_SHORT).show();
+                    }
+
                     drawView.destroyDrawingCache();
                 }
             });
