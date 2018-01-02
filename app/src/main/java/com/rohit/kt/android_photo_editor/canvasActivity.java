@@ -419,6 +419,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 imageUri = CropImage.getActivityResult(data).getUri();
                 cameraActivity.image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 cameraActivity.k = 1;
+                drawView.startNew();
                 drawView.setBackground(new BitmapDrawable(cameraActivity.image));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -437,7 +438,11 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             if (event.getAction() == MotionEvent.ACTION_DOWN)
                 drawView.drawCanvas.drawText(eText, touchX, touchY, p);
         } else if (textOn && !gText.equals("")) {
-            drawView.drawCanvas.drawText(gText, touchX, touchY, p);
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                drawView.drawPath.moveTo(touchX, touchY);
+                drawView.drawCanvas.drawText(gText, touchX, touchY, p);
+            }
+
             textOn = false;
         } else {
             switch (event.getAction()) {

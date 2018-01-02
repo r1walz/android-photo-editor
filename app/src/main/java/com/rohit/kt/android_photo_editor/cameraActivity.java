@@ -2,7 +2,9 @@ package com.rohit.kt.android_photo_editor;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -43,6 +45,11 @@ public class cameraActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             try {
                 image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                if (Build.MANUFACTURER.equals("samsung")) {
+                    Matrix m = new Matrix();
+                    m.setRotate(90);
+                    image = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
