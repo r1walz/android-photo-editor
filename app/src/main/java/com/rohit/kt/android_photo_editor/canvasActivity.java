@@ -295,6 +295,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         } else if (view.getId() == R.id.txtBox) {
+            drawView.setErase(false);
             emojiOn = false;
             textDialogAppear();
         } else if (view.getId() == R.id.emojiBtn) {
