@@ -39,9 +39,9 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
     //TODO: Add Variables
     public static DrawingView drawView;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn, textOpenBtn, emojiBtn;
+    private ImageButton currPaint, imgView, drawBtn, eraseBtn, newBtn, saveBtn, cropBtn, rotateBtn, textOpenBtn, emojiBtn;
     private LinearLayout paintLayout;
-    private ImageButton imgView;
+    private Button cancel;
     private String color, timeStamp, eText, gText;
     private float Rotation = 0;
     private Paint p;
@@ -50,7 +50,6 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
     private Intent CropIntent;
     private Uri imageUri;
-    private File tempFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +72,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         rotateBtn = findViewById(R.id.rotate_btn);
         textOpenBtn = findViewById(R.id.txtBox);
         emojiBtn = findViewById(R.id.emojiBtn);
+        cancel = findViewById(R.id.cancel_btn);
 
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
         drawView.setBrushSize(20);
@@ -85,6 +85,13 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         textOpenBtn.setOnClickListener(this);
         emojiBtn.setOnClickListener(this);
         drawView.setOnTouchListener(this);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     //TODO: if paint is clicked
@@ -202,13 +209,16 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         } else if (view.getId() == R.id.save_btn) {
             emojiOn = false;
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+            drawView.setDrawingCacheEnabled(true);
+            if(drawView.getDrawingCache()!=null)
+                drawView.destroyDrawingCache();
+            drawView.buildDrawingCache();
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
             saveDialog.setTitle("Save drawing");
             saveDialog.setMessage("Save drawing to device Gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    drawView.setDrawingCacheEnabled(true);
-                    drawView.buildDrawingCache();
+
                     Matrix matrix = new Matrix();
                     matrix.setRotate(Rotation);
                     Bitmap b = drawView.getDrawingCache();
@@ -232,11 +242,14 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         } else if (view.getId() == R.id.crop_btn) {
             emojiOn = false;
             drawView.setDrawingCacheEnabled(true);
+
+            if(drawView.getDrawingCache()!=null)
+                drawView.destroyDrawingCache();
+
             drawView.buildDrawingCache();
+
             String url = MediaStore.Images.Media.insertImage(getContentResolver(), drawView.getDrawingCache(), "tmp_" + System.currentTimeMillis(), "Drawing");
             imageUri = Uri.parse(url);
-
-            tempFile = new File(url);
 
             CropIntent = CropImage.activity(imageUri).getIntent(canvasActivity.this);
 
