@@ -274,26 +274,28 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             brushDialog.show();
 
             final TextView titleView = brushDialog.findViewById(R.id.titleView);
+            final TextView sizeView = brushDialog.findViewById(R.id.sizeView);
             final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
             Button okButton = brushDialog.findViewById(R.id.setTextBtn);
             titleView.setText(R.string.rotate);
             mSeekBar.setMax(360);
+            sizeView.setText("0\u00B0");
 
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(progress + "\u00B0"));
+                    sizeView.setText(String.valueOf(progress + "\u00B0"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(seekBar.getProgress() + "\u00B0"));
+                    sizeView.setText(String.valueOf(seekBar.getProgress() + "\u00B0"));
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(R.string.rotate);
+                    sizeView.setText(String.valueOf(seekBar.getProgress() + "\u00B0"));
                     Rotation = seekBar.getProgress();
                 }
             });
