@@ -129,24 +129,25 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
             final TextView titleView = brushDialog.findViewById(R.id.titleView);
             final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
+            final TextView sizeView = brushDialog.findViewById(R.id.sizeView);
             Button okButton = brushDialog.findViewById(R.id.setTextBtn);
             titleView.setText(R.string.select_brush);
 
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(5 + progress + "px"));
+                    sizeView.setText(String.valueOf(5 + progress + "px"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
+                    sizeView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(R.string.select_brush);
+                    sizeView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
             });
 
@@ -167,24 +168,25 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
 
             final TextView titleView = brushDialog.findViewById(R.id.titleView);
             final SeekBar mSeekBar = brushDialog.findViewById(R.id.slider);
+            final TextView sizeView = brushDialog.findViewById(R.id.sizeView);
             Button okButton = brushDialog.findViewById(R.id.setTextBtn);
             titleView.setText(R.string.select_eraser);
 
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    titleView.setText(String.valueOf(5 + progress + "px"));
+                    sizeView.setText(String.valueOf(5 + progress + "px"));
 
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
+                    sizeView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    titleView.setText(R.string.select_eraser);
+                    sizeView.setText(String.valueOf(5 + seekBar.getProgress() + "px"));
                 }
             });
 
