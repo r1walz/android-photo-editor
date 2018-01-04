@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -50,6 +51,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
     private float Rotation = 0;
     private Paint p;
     private EmojiconEditText emojiText;
+    private ImageView emojiImageView;
+    private SeekBar eSeekBar;
     private boolean textOn = false, emojiOn = false;
 
     private Intent CropIntent;
@@ -212,7 +215,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
             newDialog.show();
         } else if (view.getId() == R.id.save_btn) {
             emojiOn = false;
-            timeStamp = "IMG_"+new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date())+".png";
+            timeStamp = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".png";
             drawView.setDrawingCacheEnabled(true);
             if (drawView.getDrawingCache() != null)
                 drawView.destroyDrawingCache();
@@ -230,8 +233,8 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
                     b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
 
                     try {
-                        OutputStream os = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+File.separator+timeStamp);
-                        b.compress(Bitmap.CompressFormat.PNG,100,os);
+                        OutputStream os = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + timeStamp);
+                        b.compress(Bitmap.CompressFormat.PNG, 100, os);
                         Toast.makeText(getApplicationContext(), "Drawing saved to gallery!", Toast.LENGTH_SHORT).show();
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), "Oops! Image could not be saved.", Toast.LENGTH_SHORT).show();
@@ -367,14 +370,16 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         View view = d.findViewById(R.id.root_view);
         emojiText = d.findViewById(R.id.emojicon_edit_text);
 
-        final TextView titleText = d.findViewById(R.id.titleText);
-        final SeekBar eSeekBar = d.findViewById(R.id.emoji_seek_bar);
+        eSeekBar = d.findViewById(R.id.emoji_seek_bar);
 
         ImageView emojiImage = d.findViewById(R.id.emoji_btn);
         ImageView submitBtn = d.findViewById(R.id.submit_btn);
+        emojiImageView = d.findViewById(R.id.emoji_image);
         EmojIconActions emojiIcons = new EmojIconActions(canvasActivity.this, view, emojiText, emojiImage);
         emojiIcons.ShowEmojIcon();
         emojiIcons.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
+
+        setEmoji();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -399,22 +404,29 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         eSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                titleText.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
-
+                setEmoji();
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                titleText.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+                setEmoji();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                titleText.setText(R.string.emoji_input);
+                setEmoji();
             }
         });
 
         d.show();
+    }
+
+    private void setEmoji() {
+        Drawable D = getResources().getDrawable(R.drawable.emoji);
+        Bitmap B = ((BitmapDrawable) D).getBitmap();
+        int scale = (int) (getResources().getDisplayMetrics().density * (5 + eSeekBar.getProgress()));
+        D = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(B, scale, scale, true));
+        emojiImageView.setImageDrawable(D);
     }
 
     @Override

@@ -27,6 +27,13 @@
         android:layout_marginRight="20dp"
         android:max="45" />
 
+    <ImageView
+        android:id="@+id/emoji_image"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:scaleType="center"
+        emojicon:srcCompat="@drawable/emoji" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
