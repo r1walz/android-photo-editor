@@ -325,6 +325,7 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         final SeekBar seekBar = dialog.findViewById(R.id.txtSlider);
         seekBar.setMax(95);
         final TextView titleTxt = dialog.findViewById(R.id.titleTxt);
+        final TextView sizeView = dialog.findViewById(R.id.sizeTxtView);
 
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,18 +349,18 @@ public class canvasActivity extends AppCompatActivity implements View.OnClickLis
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+                sizeView.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                titleTxt.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
+                sizeView.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                titleTxt.setText(R.string.input_text);
+                sizeView.setText(String.valueOf(seekBar.getProgress() + 5 + "px"));
             }
         });
 
